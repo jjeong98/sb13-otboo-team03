@@ -118,7 +118,7 @@ class NotificationServiceTest {
         Instant lastCreatedAt = Instant.now();
         User receiver = mock(User.class);
         Notification firstNotification = mock(Notification.class);
-        Notification lastNotification = mock(Notification.class);
+        Notification additionalNotification = mock(Notification.class);
 
         when(receiver.getId()).thenReturn(receiverId);
         when(firstNotification.getReceiver()).thenReturn(receiver);
@@ -127,16 +127,10 @@ class NotificationServiceTest {
         when(firstNotification.getLevel()).thenReturn(NotificationLevel.INFO);
         when(firstNotification.getCreatedAt()).thenReturn(lastCreatedAt);
         when(firstNotification.getId()).thenReturn(lastNotificationId);
-        when(lastNotification.getReceiver()).thenReturn(receiver);
-        when(lastNotification.getTitle()).thenReturn("마지막 알림");
-        when(lastNotification.getContent()).thenReturn("마지막 알림 내용");
-        when(lastNotification.getLevel()).thenReturn(NotificationLevel.INFO);
-        when(lastNotification.getCreatedAt()).thenReturn(lastCreatedAt);
-        when(lastNotification.getId()).thenReturn(lastNotificationId);
 
         when(notificationRepository.findByReceiver_IdOrderByCreatedAtDescIdDesc(
                 eq(receiverId), any(Pageable.class)
-        )).thenReturn(List.of(firstNotification, lastNotification));
+        )).thenReturn(List.of(firstNotification, additionalNotification));
         when(notificationRepository.countByReceiver_Id(receiverId)).thenReturn(2L);
 
         var response = notificationService.getNotifications(receiverId, null, null, 1);
