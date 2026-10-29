@@ -28,8 +28,7 @@ public enum ErrorCode {
     //attribute
     DUPLICATE_ATTRIBUTE(HttpStatus.BAD_REQUEST,"이미 정의된 속성입니다."),
     NOT_FOUND_ATTRIBUTE_DEFINITION(HttpStatus.NOT_FOUND,"속성 정의 없음"),
-    INVALID_CLOTHES_ATTRIBUTE_VALUE(HttpStatus.BAD_REQUEST, "허용되지 않은 의상 속성 값입니다.");
-    NOT_FOUND_CLOTHES(HttpStatus.NOT_FOUND,"의상이 존재하지 않습니다."),
+    INVALID_CLOTHES_ATTRIBUTE_VALUE(HttpStatus.BAD_REQUEST, "허용되지 않은 의상 속성 값입니다."),
 
     // notification
     NOT_FOUND_NOTIFICATION(HttpStatus.NOT_FOUND, "알림이 존재하지 않습니다.");
