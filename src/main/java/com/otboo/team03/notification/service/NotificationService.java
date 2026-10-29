@@ -32,12 +32,18 @@ public class NotificationService {
     ) {
         validateLimit(limit);
 
-        List<Notification> notifications = notificationRepository.findPageByReceiverId(
-                receiverId,
-                cursor,
-                idAfter,
-                PageRequest.of(0, limit + 1)
-        );
+        PageRequest pageRequest = PageRequest.of(0, limit + 1);
+        List<Notification> notifications = cursor == null
+                ? notificationRepository.findByReceiver_IdOrderByCreatedAtDescIdDesc(
+                        receiverId,
+                        pageRequest
+                )
+                : notificationRepository.findPageByReceiverIdAfterCursor(
+                        receiverId,
+                        cursor,
+                        idAfter,
+                        pageRequest
+                );
 
         boolean hasNext = notifications.size() > limit;
         List<Notification> page = hasNext

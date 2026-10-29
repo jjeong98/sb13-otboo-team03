@@ -42,15 +42,13 @@ class NotificationRepositoryTest {
         notificationRepository.save(newNotification(receiver, "두 번째"));
         notificationRepository.save(newNotification(receiver, "세 번째"));
 
-        List<Notification> firstPage = notificationRepository.findPageByReceiverId(
+        List<Notification> firstPage = notificationRepository.findByReceiver_IdOrderByCreatedAtDescIdDesc(
                 receiver.getId(),
-                null,
-                null,
                 PageRequest.of(0, 2)
         );
 
         Notification cursorItem = firstPage.get(firstPage.size() - 1);
-        List<Notification> nextPage = notificationRepository.findPageByReceiverId(
+        List<Notification> nextPage = notificationRepository.findPageByReceiverIdAfterCursor(
                 receiver.getId(),
                 cursorItem.getCreatedAt(),
                 cursorItem.getId(),
@@ -73,10 +71,8 @@ class NotificationRepositoryTest {
         notificationRepository.save(newNotification(receiver, "수신자 알림"));
         notificationRepository.save(newNotification(otherReceiver, "다른 알림"));
 
-        List<Notification> notifications = notificationRepository.findPageByReceiverId(
+        List<Notification> notifications = notificationRepository.findByReceiver_IdOrderByCreatedAtDescIdDesc(
                 receiver.getId(),
-                null,
-                null,
                 PageRequest.of(0, 20)
         );
 

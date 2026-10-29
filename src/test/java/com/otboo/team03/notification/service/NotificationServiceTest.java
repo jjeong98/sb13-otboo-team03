@@ -49,7 +49,7 @@ class NotificationServiceTest {
                 UUID.randomUUID()
         );
 
-        when(notificationRepository.findPageByReceiverId(eq(receiverId), eq(null), eq(null), any(Pageable.class)))
+        when(notificationRepository.findByReceiver_IdOrderByCreatedAtDescIdDesc(eq(receiverId), any(Pageable.class)))
                 .thenReturn(List.of(notification));
         when(notificationRepository.countByReceiver_Id(receiverId)).thenReturn(1L);
 

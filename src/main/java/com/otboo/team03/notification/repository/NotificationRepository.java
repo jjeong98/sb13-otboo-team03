@@ -18,20 +18,20 @@ public interface NotificationRepository extends JpaRepository<Notification, UUID
             from Notification n
             where n.receiver.id = :receiverId
               and (
-                    :cursor is null
-                    or n.createdAt < :cursor
-                    or (
-                        n.createdAt = :cursor
-                        and :idAfter is not null
-                        and n.id < :idAfter
-                    )
+                    n.createdAt < :cursor
+                    or (n.createdAt = :cursor and n.id < :idAfter)
               )
             order by n.createdAt desc, n.id desc
             """)
-    List<Notification> findPageByReceiverId(
+    List<Notification> findPageByReceiverIdAfterCursor(
             @Param("receiverId") UUID receiverId,
             @Param("cursor") Instant cursor,
             @Param("idAfter") UUID idAfter,
+            Pageable pageable
+    );
+
+    List<Notification> findByReceiver_IdOrderByCreatedAtDescIdDesc(
+            UUID receiverId,
             Pageable pageable
     );
 
